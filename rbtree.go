@@ -78,7 +78,6 @@ func (t *Rbtree) Insert(key, data interface{}){
 }
 
 func (t *Rbtree) insertFix(n *node){
-  fmt.Println("*",t.root.data)
   if n==t.root {
     //n is root
     n.color=BLACK
@@ -88,17 +87,17 @@ func (t *Rbtree) insertFix(n *node){
       //n's parent is left subtree of n's grandparent
       if n.parent.parent.right==nil {
         //case2: uncle is nil (=BLACK)
-        if n.parent.right==n {
-          //case2-1: n is right of n's parent
+        if n.parent.left==n {
+          //case2-1: n is left of n's parent
           n=n.parent.parent
-          t.leftRotate(n)
+          t.rightRotate(n)
           n.color=RED
           n.parent.color=BLACK
         }else{
-          //case2-2: n is left of n's parent
+          //case2-2: n is right of n's parent
           n.parent.color=BLACK
           n.parent.parent.color=RED
-          t.rightRotate(n.parent.parent)
+          t.leftRotate(n.parent.parent)
           t.insertFix(n.right)
         }
       }else if n.parent.parent.right.color==RED {
@@ -110,17 +109,17 @@ func (t *Rbtree) insertFix(n *node){
         t.insertFix(n)
       }else{
         //case3: uncle is BLACK (=nil)
-        if n.parent.right==n {
-          //case3-1: n is right of n's parent
+        if n.parent.left==n {
+          //case3-1: n is left of n's parent
           n=n.parent.parent
-          t.leftRotate(n)
+          t.rightRotate(n)
           n.color=RED
           n.parent.color=BLACK
         }else{
-          //case3-2: n is left of n's parent
+          //case3-2: n is right of n's parent
           n.parent.color=BLACK
           n.parent.parent.color=RED
-          t.rightRotate(n.parent.parent)
+          t.leftRotate(n.parent.parent)
           t.insertFix(n.right)
         }
       }

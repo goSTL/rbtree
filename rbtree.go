@@ -73,8 +73,6 @@ func (t *Rbtree) Insert(key, data interface{}){
   }
   //rebalance
   t.insertFix(n)
-  t.Inorder(t.root)
-  fmt.Println("+",t.root.data)
 }
 
 func (t *Rbtree) insertFix(n *node){
